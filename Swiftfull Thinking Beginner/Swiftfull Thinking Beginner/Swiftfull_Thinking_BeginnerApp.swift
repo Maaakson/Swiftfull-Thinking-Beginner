@@ -11,7 +11,7 @@ import SwiftUI
 struct Swiftfull_Thinking_BeginnerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TransitionPractice()
         }
     }
 }
