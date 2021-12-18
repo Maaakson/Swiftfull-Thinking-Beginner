@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct OnboardingManager: View {
-//    @AppStorage("signed_in") var isCurrentUserSignedIn: Bool = false
+    @AppStorage("signed_in") var isCurrentUserSignedIn: Bool = false
     
     var body: some View {
-        Text("Hello")
-//        if isCurrentUserSignedIn {
-//            ProfileView()
-//        } else {
-//            OnboardingScreens()
-//        }
+        if isCurrentUserSignedIn {
+            ProfileView()
+        } else {
+            OnboardingScreens()
+        }
     }
 }
 

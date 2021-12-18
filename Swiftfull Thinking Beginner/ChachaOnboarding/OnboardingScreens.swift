@@ -14,13 +14,15 @@ class LocationFetcher: ObservableObject {
 struct OnboardingScreens: View {
     @AppStorage("location") var location: String = "Batumi"
     @AppStorage("favourite_drinks") var favouriteDrinks: String = ""
+    @AppStorage("signed_in") var isCurrentUserSignedIn: Bool = false
+
     
     @StateObject var onlineFetcher = LocationFetcher()
     
     
     var body: some View {
         NavigationView {
-            firstScreen
+           firstScreen
         }
     }
 }
@@ -59,9 +61,9 @@ extension OnboardingScreens {
                     .padding()
 
                 Spacer()
-                
+
                 NavigationLink {
-                    secondScreen
+                    drinkSection
                 } label: {
                     Text("Next")
                         .padding()
@@ -70,11 +72,12 @@ extension OnboardingScreens {
                                 .foregroundColor(Color(uiColor: .secondarySystemBackground))
                         )
                 }
+                .navigationViewStyle(.stack)
             }
             .padding()
         }
-
-        var secondScreen: some View {
+    
+        var locationSection: some View {
             VStack {
                 HStack {
                     Text("Please, choose your location")
@@ -97,10 +100,10 @@ extension OnboardingScreens {
                 Spacer()
 
 
-                NavigationLink {
-                    testScreen
+                Button {
+                    isCurrentUserSignedIn = true
                 } label: {
-                    Text("Next")
+                    Text("Finish")
                         .font(.title3)
                         .padding()
                         .background(
@@ -113,7 +116,7 @@ extension OnboardingScreens {
             .padding()
         }
 
-        var thirdScreen: some View {
+        var drinkSection: some View {
             VStack {
                 HStack {
                     Text("Please, type in your favourite drinks")
@@ -122,9 +125,9 @@ extension OnboardingScreens {
                         .padding(.horizontal)
                     Spacer()
                 }
-
+                
                 Spacer()
-
+                
                 TextField("Your Favourite Drinks", text: $favouriteDrinks)
                     .font(.title3)
 
@@ -134,22 +137,21 @@ extension OnboardingScreens {
                 Spacer()
 
                 NavigationLink {
-                    testScreen
+                    locationSection
                 } label: {
                     Text("Next")
                         .font(.title3)
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color(uiColor:
-                                                            .secondarySystemBackground))
+                                .foregroundColor(Color(uiColor: .secondarySystemBackground))
                         )
                 }
                 .disabled(favouriteDrinks.count < 5 ? true : false)
             }
             .padding()
         }
-
+    
         var testScreen: some View {
             VStack  {
                 Text("Finished")
